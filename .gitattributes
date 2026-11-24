@@ -1,0 +1,11 @@
+# Finales de linea: LF dentro del repositorio y en el disco
+* text=auto eol=lf
+
+# Binarios: Git no los toca ni intenta convertirlos
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary

@@ -1,0 +1,14 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+
+# ── Odoo ──
+*.log
+
+# ── Editores ──
+.idea/
+.vscode/
+
+# ── Sistema ──
+.DS_Store
+Thumbs.db

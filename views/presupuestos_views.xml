@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_presupuesto_form" model="ir.ui.view">
+        <field name="name">vista formulario de presupuesto de peliculas</field>
+        <field name="model">presupuesto</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                 <widget name="web_ribbon" title="Archivado" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+
+                    <field name="image_1920" widget="image" class="oe_avatar"
+       options="{'preview_image': 'image_1920', 'size': ['', 128]}"/>
+
+                 <div class="oe_title">
+                      <div class="o_row">
+                           <field name="active" invisible="1"/>
+                          <h1 style="display: flex;">
+                            <field name="name"
+                            placeholder="nombre de la pelicula"
+                              required="1"
+                              default_focus="1" class ="oe_inline"/>
+
+                              <field name="puntuacion" widget="percentpie" string=" " style="padding-left: 10px;"/>
+                              <field name="puntuacion2"  placeholder="puntuacion de ususario"
+                              class="oe_edit_only oe_inline"/>
+                          </h1>
+                      </div>
+                     <div class="o_row" style="display: flex;">
+                              <field name="clasificacion" required="1"/>
+                         <span class="fa fa-circle"
+                               attrs="{'invisible': ['|', ('clasificacion', '=', False), ('fch_estreno', '=', False)]}"/>
+<!--                            style ="font-size: 8px; padding: 0 8px;" +-->
+
+                              <field name="fch_estreno" />
+                     </div>
+
+                   <div class="o_row">
+                            <field name="genero_ids" widget="many2many_tags" style="display: flex;"/>
+                        </div>
+                    </div>
+                    <group string="Datos principales" style="margin-top: -10px;">
+                        <group colspan="2">
+                            <field name="vista_general" placeholder="Vista general..."/>
+                        </group>
+                        <group>
+                            <field name="director_id"/>
+                            <field name="categoria_director_id"/>
+                            <field name="link_trailer" widget="url"/>
+                        </group>
+                        <group>
+                            <field name="es_libro" widget="boolean_toggle"/>
+                         <field name="libro" filename="libro_filename" attrs="{'invisible': [('es_libro', '=', False)]}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <script>
+                    console.log('hola mundo');
+                </script>
+            </form>
+        </field>
+    </record>
+</odoo>

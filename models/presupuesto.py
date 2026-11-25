@@ -13,6 +13,17 @@ class Presupuesto (models.Model):
     _name = "presupuesto"
     _inherit = ["image.mixin"]
 
+    @api.depends('detalle_ids')
+    def _compute_total(self):
+        for record in self:
+            sub_total=0
+            for linea in record.detalle_ids:
+                sub_total += linea.importe
+            record.base = sub_total
+            record.impuestos = sub_total * 0.19
+            record.total =  sub_total * 1.19
+
+
     name = fields.Char(string="Pelicula")
     clasificacion = fields.Selection(selection=[
         ('G','G'), #Publico general
@@ -76,6 +87,17 @@ class Presupuesto (models.Model):
         string='Detalles',
     )
     campos_ocultos = fields.Boolean(string='Campos ocultos')
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Moneda',
+        default=lambda self: self.env.company.currency_id.id,
+    )
+    terminos = fields.Text(string='Terminos')
+    base = fields.Monetary(string='Base imponible', compute='_compute_total' )
+    impuestos = fields.Monetary(string='Impuestos', compute='_compute_total')
+    total = fields.Monetary(string='Total', compute='_compute_total')
+
+
 
     def aprobar_presupuesto(self):
         self.state = 'aprobado'
@@ -146,7 +168,22 @@ class PresupuestoDetalle(models.Model):
     imagen = fields.Binary(string='Imagen', related='name.imagen')
     cantidad = fields.Float(string='Cantidad', default=1.0, digits=(16,4))
     precio = fields.Float(string='Precio', digits='Product Price')
-    importe = fields.Float(string='importe')
+    importe = fields.Monetary(string='importe')
+
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Moneda',
+        related='presupuesto_id.currency_id'
+    )
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        if self.name:
+            self.precio = self.name.precio
+
+    @api.onchange('cantidad','precio')
+    def _onchange_importe(self):
+        self.importe = self.cantidad * self.precio
 
 
 

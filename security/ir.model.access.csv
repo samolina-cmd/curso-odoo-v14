@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_presupuesto,access.presupuesto,model_presupuesto,base.group_user,1,1,1,1
+access_presupuesto_detalle,access.presupuesto.detalle,model_presupuesto_detalle,base.group_user,1,1,1,1
+access_genero,access.genero,model_genero,base.group_user,1,1,1,1
+access_recurso_cinematografico,access.recurso.cinematografico,model_recurso_cinematografico,base.group_user,1,1,1,1
